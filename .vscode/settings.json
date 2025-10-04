@@ -68,7 +68,8 @@
     "__bit_reference": "cpp",
     "__hash_table": "cpp",
     "initializer_list": "cpp",
-    "unordered_map": "cpp"
+    "unordered_map": "cpp",
+    "istream": "cpp"
   },
   // --------------------------------------------------------------------------------------
 }
