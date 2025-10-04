@@ -53,5 +53,22 @@
   "code-runner.preserveFocus": false,
   // Whether to ignore selection to always run entire file. (Default is false)
   "code-runner.ignoreSelection": true,
+  "files.associations": {
+    "iostream": "cpp",
+    "__split_buffer": "cpp",
+    "deque": "cpp",
+    "string": "cpp",
+    "vector": "cpp",
+    "ios": "cpp",
+    "array": "cpp",
+    "queue": "cpp",
+    "string_view": "cpp",
+    "stack": "cpp",
+    "bitset": "cpp",
+    "__bit_reference": "cpp",
+    "__hash_table": "cpp",
+    "initializer_list": "cpp",
+    "unordered_map": "cpp"
+  },
   // --------------------------------------------------------------------------------------
 }
