@@ -8,13 +8,13 @@ int main(){
 
     //小顶堆
     priority_queue<int, vector<int>,greater<int>> pque;
-    pque.push(1);
+    pque.push(4);
     cout << pque.top() << endl;
      pque.push(3);
     cout << pque.top() << endl;
-     pque.push(4);
+     pque.push(2);
     cout << pque.top() << endl;
-     pque.push(3);
+     pque.push(1);
     cout << pque.top() << endl;
 
 
