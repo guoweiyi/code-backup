@@ -2,8 +2,8 @@
 using namespace std;
 
 int main() {
-    long long n, a, b;
-    if (!(cin >> n >> a >> b)) return 0;
-    cout << max(0LL, a + b - n) << '\n';
+    int n, a, b;
+    cin >> n >> a >> b;
+    cout << max(0, a + b - n);
     return 0;
 }

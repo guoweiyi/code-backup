@@ -48,9 +48,7 @@ long long getMin() {
 }
 
 int main() {
-
     long long n = rd;
-
     //桶排序
     for (int i = 0; i < n; i++) {
         int x = rd;
