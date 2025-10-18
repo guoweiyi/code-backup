@@ -1,3 +1,5 @@
+//字符串转数字 stoi（）
+//string 拼接时to_string(b)  size();
 
 #include <bits/stdc++.h>
 using namespace std;
@@ -29,4 +31,5 @@ int main() {
 
         cout << expr << "\n" << expr.size() << "\n";
     }
+    return 0;
 }
