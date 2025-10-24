@@ -13,8 +13,11 @@ int main() {
     for (int i = 0; i < m; i++) cin >> b[i];
     for (int i = 0; i < m; i++) cin >> c[i];
 
-    int maxA = *max_element(a.begin(), a.end());
-
+ //   int maxA = *max_element(a.begin(), a.end());
+    int maxA = -1;
+    for(int i = 0;i < n;i++){
+        if(maxA < a[i]) maxA = a[i];
+    }
     for (int i = 0; i < m; i++) {
         if (maxA >= b[i]) {
             sum += c[i];
