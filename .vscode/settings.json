@@ -101,7 +101,9 @@
     "ratio": "cpp",
     "sstream": "cpp",
     "variant": "cpp",
-    "algorithm": "cpp"
+    "algorithm": "cpp",
+    "climits": "cpp",
+    "map": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled",
   // --------------------------------------------------------------------------------------
