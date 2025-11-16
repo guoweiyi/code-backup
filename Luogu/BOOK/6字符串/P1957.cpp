@@ -9,6 +9,9 @@ int main() {
     cin >> n;
     char op;
     while (n--) {
+        //fgets(s ,sizeof(s),stdin);读入一行 有最大输入量 含空格
+        //if() last = s[0],s[0] = '';
+        //sscanf(a,b);忽略空格输入两个数字
         string s;
         cin >> s;
         int a, b;
@@ -19,7 +22,6 @@ int main() {
             a = stoi(s);
             cin >> b;
         }
-
         int res;
         char symbol;
 
