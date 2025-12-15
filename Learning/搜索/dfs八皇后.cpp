@@ -28,7 +28,6 @@ void dfs(int e){
             col[i] = dg[i + e] = udg[i - e + n] = false;
             g[e][i] = '.';
         }
-        
     }
 }
 
