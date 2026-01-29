@@ -115,5 +115,11 @@
       "compileCommand": "g++-15 ${path:${file}} -o ${path:${fileDirname}/${fileBasenameNoExtension}.out} -W -Wall -O2 -std=c++17",
       "runCommand": "${path:${fileDirname}/${fileBasenameNoExtension}.out}"
     }
+  },
+  "chat.tools.terminal.autoApprove": {
+    "/^python CTF/Tools/unser/unser\\.py scan CTF/Tools/unser/ctf_demo\\.php --poc test_auto_poc\\.php --regex --cve --base64$/": {
+      "approve": true,
+      "matchCommandLine": true
+    }
   }
 }

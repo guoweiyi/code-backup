@@ -1,28 +1,57 @@
 <?php
-highlight_file(__FILE__);
-class you
+error_reporting(0);
+class Start
 {
-    private $body;
-    private $pro='';
-    function __destruct()
-    {
-        $project=$this->pro;
-        $this->body->$project();
+    public $name='cmcc';
+    public $flag='/flag';
+
+    public function __wakeup(){
+        echo "hello";
+        echo $this->name;
+    }
+
+    public function __get($cc){
+        echo "your flag : ".$this->flag;
+        return ;
     }
 }
 
-class my
-{
-    public $name;
+class Grant{
+    private $phone_number=10086;
+    public $file;
 
-    function __call($func, $args)
-    {
-        if ($func == 'yourname' and $this->name == 'myname') {
-            include('flag.php');
-            echo $flag;
-        }
+    public function __construct(){
+        echo "I want to get flag!";
+    }
+
+    public function __toString(){
+        return $this->file->fii1lennnaammee['filllennname'];
     }
 }
-$a=$_GET['a'];
-unserialize($a);
+
+class Bill{
+    public $number='';
+    public $card='';
+
+    public function __get($name){
+        $function = $this->card;
+        return $function();
+    }
+
+    public function Get_bill($file){
+        include($file);
+    }
+
+    public function __invoke(){
+        $content = $this->Get_bill($this->number);
+        echo $content;
+    }
+}
+
+
+if (isset($_POST['cmd'])) {
+    unserialize($_POST['cmd']);
+} else {
+    highlight_file(__FILE__);
+}
 ?>
