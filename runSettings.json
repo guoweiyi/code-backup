@@ -1,0 +1,35 @@
+{
+  ".json": {
+    "runCommand": [
+      "TODO"
+    ],
+    "compileCommand": [
+      "TODO! REMOVE IF NOT NEEDED"
+    ],
+    "debugCommand": [
+      "TODO! (Optional) Command to start debug server on ${debugPort}"
+    ],
+    "debugAttachConfig": "TODO! (Optional) Name of launch.json attach configuration"
+  },
+  ".cpp": {
+    "compileCommand": [
+      "/opt/homebrew/bin/g++-15",
+      "${file}",
+      "-o",
+      "${fileDirname}/${fileBasenameNoExtension}.out",
+      "-W",
+      "-Wall",
+      "-O2",
+      "-std=c++17"
+    ],
+    "runCommand": [
+      "${fileDirname}/${fileBasenameNoExtension}.out"
+    ],
+    "debugCommand": [
+      "gdbserver",
+      "localhost:${debugPort}",
+      "${fileDirname}/${fileBasenameNoExtension}"
+    ],
+    "debugAttachConfig": "GDB: Attach"
+  }
+}

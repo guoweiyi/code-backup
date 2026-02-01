@@ -112,7 +112,7 @@
   // --------------------------------------------------------------------------------------
   "fastolympiccoding.runSettings": {
     ".cpp": {
-      "compileCommand": "g++-15 ${path:${file}} -o ${path:${fileDirname}/${fileBasenameNoExtension}.out} -W -Wall -O2 -std=c++17",
+      "compileCommand": "/opt/homebrew/bin/g++-15 ${path:${file}} -o ${path:${fileDirname}/${fileBasenameNoExtension}.out} -W -Wall -O2 -std=c++17",
       "runCommand": "${path:${fileDirname}/${fileBasenameNoExtension}.out}"
     }
   },
