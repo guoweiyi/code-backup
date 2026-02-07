@@ -4,7 +4,7 @@ using namespace std;
 int N, M;
 string s;
 priority_queue<int> lefta; //大顶堆
-priority_queue<int ,vector<int>,greater<int>> righta; //小顶堆bug1
+priority_queue<int,vector<int>,greater<int>> righta; //小顶堆bug1
 
 void insert(int x){
     if(lefta.empty() || x <= lefta.top())  lefta.push(x); //bug2
